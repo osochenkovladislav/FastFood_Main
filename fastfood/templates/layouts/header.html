@@ -8,8 +8,8 @@
                             <div class="main-menu  d-none d-lg-block">
                                 <nav>
                                     <ul id="navigation">
-                                        <li><a class="active" href="#">Головна</a></li>
-                                        <li><a href="#">Меню</a></li>
+                                        <li><a class="active" href="/">Головна</a></li>
+                                        <li><a href="">Меню</a></li>
                                         <li><a href="#">Про компанію</a></li>
                                         <li><a href="#">Контанкти</a></li>
                                     </ul>
@@ -18,13 +18,13 @@
                         </div>
                         <div class="col-xl-2 col-lg-2">
                             <div class="logo-img">
-                                <a href="index.html">
+                                <a href="/">
                                     <img src="{% static 'img/logo.png' %}" alt="">
                                 </a>
                             </div>
                         </div>
                         <div class="col-xl-5 col-lg-5 d-none d-lg-block">
-                            <div class="book_room">
+                            <div class="book_room pull">
                                 <div class="socail_links">
                                     <ul>
                                         <li>
@@ -49,9 +49,42 @@
                                         </li>
                                     </ul>
                                 </div>
+                                {% if not user.is_authenticated %}
                                 <div class="book_btn d-none d-xl-block">
-                                    <a class="#" href="#">+10 367 453 7382</a>
+                                    <ul>
+                                        <li>
+                                            <a class="#"  href="#">+38-093-444-44-44</a>
+                                        </li>
+                                    </ul>
                                 </div>
+                                <div class="book_btn d-none d-xl-block 1">
+                                    <ul>
+                                        <div class="book_btn d-none d-xl-block 1">
+                                            <li>
+                                                <a href="/accounts/sign_in">
+                                                    <i class="fa fa-user-circle-o">Вхід</i>
+                                                </a>
+						                    </li>
+                                        </div>
+                                    </ul>
+                                </div>
+                                {% else %}
+                                <div class="book_btn d-none d-xl-block 1">
+                                    <li>
+                                        <a href="/accounts/profile.html">
+                                            <i class="fa fa-user-circle-o"> {{ user.username }}</i>
+                                        </a>
+                                    </li>
+                                </div>
+                                <div class="book_btn d-none d-xl-block 1">
+                                    <li>
+                                        <a href="/accounts/sign_out">
+                                            <i class="fa fa-sign-out"> Вихід</i>
+                                        </a>
+                                    </li>
+                                </div>
+                                {% endif %}
+
                             </div>
                         </div>
                         <div class="col-12">

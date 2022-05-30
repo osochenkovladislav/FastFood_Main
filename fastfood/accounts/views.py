@@ -114,4 +114,3 @@ def get_user(email):
         return None
     else:
         return user
-

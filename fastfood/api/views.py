@@ -52,5 +52,5 @@ def product_api(request, pr_id=0):
     elif request.method == 'DELETE':
         product = Product.objects.get(id=pr_id)
         product.delete()
-        return JsonResponse('Department has been Deleted successfully!', safe=False)
+        return JsonResponse('Product has been Deleted successfully!', safe=False)
 

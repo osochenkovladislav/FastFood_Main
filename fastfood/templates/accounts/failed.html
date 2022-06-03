@@ -1,0 +1,27 @@
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+<div class="bradcam_area breadcam_bg overlay">
+        <h3>Помилка!</h3>
+</div>
+<div id="breadcrumb" class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="breadcrumb-header">{{title}}</h3>
+                <ul class="breadcrumb-tree">
+                    <li><a href="orders/">orders</a></li>
+                    <li class="active">failed</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="section">
+    <div class="container" style="margin-top: 20%;">
+        <div class="row">
+            <h3 style="color: red">{{ title }}</h3>
+        </div>
+    </div>
+</div>
+{% endblock content %}

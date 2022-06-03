@@ -1,5 +1,10 @@
+from django.core.mail import send_mail
+
+from menu.models import *
+
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
+
 from django.contrib.auth.models import User
 from django.contrib.auth import logout, login, authenticate
 
@@ -58,12 +63,10 @@ def sign_in(request):
         user_x = get_user(email_x)
         if user_x is None:
             color = 'red'
-            message = 'Користувач не знайдений'
-            title = 'Звіт про авторизацію'
+            message = 'Користувач не знайдений або помилка в паролі!'
             return render(request, 'accounts/report.html', context={
                 'color': color,
-                'message': message,
-                'title': title
+                'message': message
             })
 
         # 2 - Перевіряємо наявність запису у БД:
@@ -73,12 +76,10 @@ def sign_in(request):
             return render(request, 'home/index.html')
         else:
             color = 'red'
-            message = 'Користувач не знайдений'
-            title = 'Звіт про авторизацію'
+            message = 'Користувач не знайдений або помилка в паролі!'
             return render(request, 'accounts/report.html', context={
                 'color': color,
-                'message': message,
-                'title': title
+                'message': message
             })
 
 
@@ -90,9 +91,15 @@ def sign_out(request):
 
 
 def profile(request):
-    return render(request, 'home/index.html', context={
-        'title': 'Профіль користувача'
-    })
+    if request.method == 'GET':
+        return render(request, 'accounts/profile.html', context={
+            'title': 'Авторизація',
+            'user_orders': Order.objects.filter(user_id=request.user.id)
+        })
+    else:
+        return render(request, 'accounts/profile.html', context={
+            'title': 'Профіль користувача'
+        })
 
 
 def ajax_email(request):
@@ -114,3 +121,94 @@ def get_user(email):
         return None
     else:
         return user
+
+
+def cart(request):
+    if request.method == 'GET':
+        return render(request, 'accounts/cart.html', context={
+            'title': 'Кошик',
+            'user_orders': Order.objects.filter(user_id=request.user.id)
+        })
+
+
+def ajax_del_order_dynamics(request):
+    response = dict()
+    uid = request.GET['uid']
+    user_orders = Order.objects.filter(user_id=uid)
+
+    dict_products = list()
+    for sp in user_orders:
+        dict_products.append({
+            "id": sp.id,
+            "title": sp.title,
+            "name": str(sp.product.name),
+            "picture": str(sp.product.picture),
+            "amount": sp.amount,
+            "date": sp.date,
+            "status": sp.status
+        })
+
+    response['orders'] = dict_products
+    return JsonResponse(response)
+
+
+def ajax_del_order(request):
+    response = dict()
+    order_id = request.GET['order_id']
+    del_order = Order.objects.get(id=order_id)
+    del_order.delete()
+    response['message'] = f'AJAX - OJ / ID: {order_id}'
+    return JsonResponse(response)
+
+
+def confirm(request):
+        if request.method == 'POST':
+            labs = request.POST['labs']
+            email = request.POST['email']
+            adressa = request.POST['adressa']
+            city = request.POST['city']
+            state = request.POST['state']
+            zip = request.POST['zip']
+
+            order_info = Order.objects.filter(user_id=request.user.id)
+            order_info_len = len(order_info)
+
+            if order_info_len:
+                subject = 'Оформлення підписки на сайті FastFood'
+                body = """
+                                <h4>Вітаємо!</h4>
+                                <h4>Дякуємо Вам, за те що обрали наш чудовий ресторан!</h4>
+                                <h4>Ваше замовленя успішно оплачено та вже прямує до Вас!</h4>
+                                <h4>Номер вашого замовлення: 1465405641</h4>
+                                
+                                <br>
+                                <h4>Даруємо Вам промокод на знижку 30% на купівлю однієї позиції з нашого ресторану!</h4>
+                                <h4>Промокод: promo_3246234</h4>
+                                <h4>Бажаєте використати свій бонус?:)</h4>
+                                <div>
+                                    <br>
+                                    <a class="btn btn-success" href="http://127.0.0.1:8000/menu/">Перейти на сайт!</a>
+                                </div>"""
+
+                success = send_mail(subject, '', 'FastFood', [email], fail_silently=False, html_message=body)
+                if success:
+                    order_info.delete()
+                    return  render(request, 'accounts/thanks.html', {
+                        'labs': labs,
+                        'email': email,
+                        'adressa': adressa,
+                        'city': city,
+                        'state': state,
+                        'zip': zip
+                    })
+                else:
+                    return render(request, 'accounts/failed.html', {
+                        'title': 'Помилка поштового відправлення'
+                    })
+            else:
+                return render(request, 'accounts/failed.html', {
+                    'title': 'Помилка поштового відправлення'
+                })
+
+
+

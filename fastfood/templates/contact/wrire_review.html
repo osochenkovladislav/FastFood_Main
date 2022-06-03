@@ -1,0 +1,33 @@
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+    {% load static %}
+    <div class="bradcam_area breadcam_bg overlay">
+        <h3>Подяка!</h3>
+    </div>
+    <div class="section">
+			<div class="container">
+				<div class="column">
+                    <br>
+                    <h3 class="footer_title">Дякуємо за ваш відгук!</h3>
+					<h3 class="footer_title">Нам важливі всі ваші думки та почуття!</h3>
+					<h3 class="footer_title">
+						За ваш відгук!<br>
+						Ми даруємо Вам промокод на наступне замовлення в ношому ресторані "FastFood"<br>
+						Промокод: 58741687_123<br>
+						Бажаєте вже його використати?:)
+					</h3>
+				</div>
+				<a class="btn btn-success" href="http://127.0.0.1:8000/menu/">Перейти в меню!</a>
+
+				<a class="btn btn-success" href="http://127.0.0.1:8000/contact/">Сторінка відгуків!</a>
+			</div>
+    </div>
+
+<style>
+	.btn btn-success {
+		text-align: center;
+	}
+</style>
+
+{% endblock content %}

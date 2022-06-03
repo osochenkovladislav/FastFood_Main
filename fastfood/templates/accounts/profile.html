@@ -1,0 +1,221 @@
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+{% load static %}
+<div class="row" style="margin-top: 170px">
+    <div class="col-75">
+        <div class="container" style="text-align: center">
+            <form action="/accounts/confirm" method="post">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-50">
+                        <h3>Ваші дані:</h3>
+                        <label for="labs"><i class="fa fa-user"> Ф.І.О.</i> <br><input type="labs" id="labs" name="labs" placeholder="Пупкін Василь Петрович" required></label>
+                        <label for="email"><i class="fa fa-envelope"></i> Email:</label>
+                        <input type="email" id="email" name="email" placeholder="john@example.com" required>
+                        <label for="adressa"><i class="fa fa-address-card-o"> Адреса:</i> <br><input type="adressa" id="adressa" name="adressa" placeholder="вул.Блакитного 10" required></label>
+                        <label for="city"><i class="fa fa-institution"></i> Місто:</label>
+                        <input type="text" id="city" name="city" placeholder="Київ" required>
+                        <div class="row">
+                            <div class="col-50">
+                                <label for="state">Область:</label>
+                                <input type="text" id="state" name="state" placeholder="Київська  ">
+                            </div>
+                            <div class="col-50">
+                                <label for="zip">Індекс:</label>
+                                <input type="text" id="zip" name="zip" placeholder="03041">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-50">
+                        <h3>Платіж</h3>
+                        <label for="labs">Accepted Cards</label>
+                        <div class="icon-container">
+                            <i class="fa fa-cc-visa" style="color:navy;"></i>
+                            <i class="fa fa-cc-amex" style="color:blue;"></i>
+                            <i class="fa fa-cc-mastercard" style="color:red;"></i>
+                            <i class="fa fa-cc-discover" style="color:orange;"></i>
+                        </div>
+                        <label for="cname">Ім'я власника картки: </label>
+                        <input type="text" id="cname" name="cardname" placeholder="Андрій">
+                        <label for="ccnum">Номер кредитної карточки: </label>
+                        <input type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444">
+                        <label for="expmonth">Термін дійсності:</label>
+                        <input type="text" id="expmonth" name="expmonth" placeholder="September">
+                        <div class="row">
+                            <div class="col-50">
+                                <label for="expyear">Exp Year:</label>
+                                <input type="text" id="expyear" name="expyear" placeholder="2018">
+                            </div>
+                            <div class="col-50">
+                                <label for="cvv">CVV:</label>
+                                <input type="text" id="cvv" name="cvv" placeholder="352">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <label>
+                    <input type="checkbox" checked="checked" name="sameadr"> Запам'ятати дані
+                </label>
+                <input type="submit" id="submit" value="Оплатити замовлення" class="btn btn-success b">
+            </form>
+        </div>
+    </div>
+    <div class="col-25">
+        <h4 style="text-align: center">Кошик</h4>
+        {% for order in user_orders %}
+            <div class="container">
+                <h4>
+                    <span class="price" style="color:black">
+                        <a href="/accounts/cart"><i class="fa fa-shopping-cart" style="padding-top: 37px"></i></a>
+                    </span>
+                </h4>
+                <p>
+                    {{ order.product.name }}
+                    <div class="price_cell" style="text-align: left">{{ order.amount }} грн</div>
+                </p>
+            </div>
+        {% endfor %}
+        <div>
+            <h5 style="text-align: center">Загальна сума до сплати: &nbsp;
+                <span id="total" style="color: red">0.00 грн</span>
+            </h5>
+        </div>
+    </div>
+</div>
+
+<style>
+body {
+  font-family: Arial;
+  font-size: 17px;
+  padding: 8px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.row {
+  display: -ms-flexbox; /* IE10 */
+  display: flex;
+  -ms-flex-wrap: wrap; /* IE10 */
+  flex-wrap: wrap;
+  margin: 0 11px;
+}
+
+.col-25 {
+  -ms-flex: 25%; /* IE10 */
+  flex: 25%;
+}
+
+.col-50 {
+  -ms-flex: 50%; /* IE10 */
+  flex: 50%;
+}
+
+.col-75 {
+  -ms-flex: 75%; /* IE10 */
+  flex: 75%;
+}
+
+.col-25,
+.col-50,
+.col-75 {
+  padding: 0 16px;
+}
+
+.container {
+  background-color: #f2f2f2;
+  padding: 5px 20px 15px 20px;
+  border: 1px solid lightgrey;
+  border-radius: 3px;
+  position: relative;
+}
+
+input[type=text] {
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+input[type=email] {
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+input[type=adressa] {
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+input[type=labs] {
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+label {
+  margin-bottom: 10px;
+  display: block;
+}
+
+.icon-container {
+  margin-bottom: 20px;
+  padding: 7px 0;
+  font-size: 24px;
+}
+
+.btn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px;
+  margin: 10px 0;
+  border: none;
+  width: 100%;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 17px;
+}
+
+.btn:hover {
+  background-color: #45a049;
+}
+
+a {
+  color: #2196F3;
+}
+
+hr {
+  border: 1px solid lightgrey;
+}
+
+span.price {
+  float: right;
+  color: grey;
+}
+
+/* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (also change the direction - make the "cart" column go on top) */
+@media (max-width: 800px) {
+  .row {
+    flex-direction: column-reverse;
+  }
+  .col-25 {
+    margin-bottom: 20px;
+  }
+}
+</style>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-2.2.4.js" charset="utf-8"></script>
+<script src="{% static 'js/cart.js' %}"></script>
+<script src="{% static 'js/cart1.js' %}"></script>
+{% endblock content %}

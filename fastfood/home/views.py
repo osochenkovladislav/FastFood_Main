@@ -29,7 +29,7 @@ def subscribe(request):
             <hr/>
         """
         #
-        success = send_mail(subject, '', 'Webshop', [email], fail_silently=False, html_message=body)
+        success = send_mail(subject, '', 'FastFood', [email], fail_silently=False, html_message=body)
         if success:
             return render(request, 'home/subscribe.html', {
                 'title': 'Дяка за замовлення',

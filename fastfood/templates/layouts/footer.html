@@ -6,37 +6,34 @@
                         <div class="col-xl-4 col-md-6 col-lg-4">
                             <div class="footer_widget text-center ">
                                 <h3 class="footer_title pos_margin">
-                                        New York
+                                        Київ
                                 </h3>
-                                <p>5th flora, 700/D kings road, <br>
-                                        green lane New York-1782 <br>
-                                        <a href="#">info@burger.com</a></p>
-                                <a class="number" href="#">+10 378 483 6782</a>
+                                 <p>Троєщина, зелена галявина <br>
+                                        за поворотом біля 6-ї авеню <br>
+                                        <a href="#">info@fastfood.com</a></p>
+                                <a class="number" href="#">+068 444 44 44</a>
 
                             </div>
                         </div>
                         <div class="col-xl-4 col-md-6 col-lg-4">
                             <div class="footer_widget text-center ">
-                                <h3 class="footer_title pos_margin">
-                                    California
-                                </h3>
-                                <p>5th flora, 700/D kings road, <br>
-                                        green lane New York-1782 <br>
-                                        <a href="#">info@burger.com</a></p>
-                                <a class="number" href="#">+10 378 483 6782</a>
-
+                                <iframe height="350" width="350" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d20327.713671901525!2d30.47092167036132!3d50.44176731998439!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xc6184e2d09cb9efd!2sIT%20Step%20Academy!5e0!3m2!1sru!2sua!4v1653512203915!5m2!1sru!2sua" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                             </div>
                         </div>
                         <div class="col-xl-4 col-md-12 col-lg-4">
                                 <div class="footer_widget">
                                         <h3 class="footer_title">
-                                                Stay Connected
+                                                Залишайтесь на зв'язку :)
                                         </h3>
-                                        <form action="#" class="newsletter_form">
-                                            <input type="text" placeholder="Enter your mail">
-                                            <button type="submit">Sign Up</button>
+                                        <form action="/subscribe" class="newsletter_form" method="post">
+                                            {% csrf_token %}
+                                                {% if not user.is_authenticated %}
+                                                {% else %}
+                                                    <input type="email" id="email1" name="email" placeholder="Введіть email" required>
+                                                    <button type="submit">Підписатись</button>
+                                                {% endif %}
                                         </form>
-                                        <p class="newsletter_text">Stay connect with us to get exclusive offer!</p>
+                                        <p class="newsletter_text">Залишайтеся на зв'язку з нами, щоб отримати ексклюзивну пропозицію!</p>
                                     </div>
                         </div>
                     </div>
@@ -76,12 +73,11 @@
                     <div class="row">
                         <div class="col-xl-12">
                             <p class="copy_right text-center">
-                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                Зроблено командою розробки з Києва! 2022 рік!</a>
                             </p>
                         </div>
                     </div>
                 </div>
             </div>
         </footer>
+

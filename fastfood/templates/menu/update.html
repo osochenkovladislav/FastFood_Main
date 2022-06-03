@@ -1,0 +1,49 @@
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+<div class="bradcam_area breadcam_bg_1 overlay">
+    <h3>Редактувати продукт</h3>
+</div>
+<br>
+<div class="container" style="text-align: center">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <form action="/menu/update/{{product.id}}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div id="form_template">
+                        {% for field in form %}
+                            <div class="form-group">
+                                {{ field.label_tag }}
+                                <div>{{ field }}</div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <p style="margin-top: 20px">
+                        <input id="b1" type="submit" value="Зберегти" class="btn btn-success">
+                        <input id="b2" type="reset" value="Очистити" class="btn btn-danger">
+                    </p>
+                    <p>
+                        <a class="btn btn-secondary" href="/menu">Повернутись до меню</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<style>
+    .form-group input,
+    .form-group select{
+        width: 50%;
+        height: 30px
+    }
+    .form-group textarea {
+        width: 50%;
+    }
+    #b1, #b2 {
+        width: 150px;
+    }
+
+</style>
+{% endblock content %}

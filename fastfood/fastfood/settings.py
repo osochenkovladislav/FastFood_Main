@@ -43,10 +43,13 @@ INSTALLED_APPS = [
     'menu',
     'about',
     'contact',
-    'api',
+    'corsheaders',
+    'rest_framework',
+    'api.apps.ApiConfig',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -139,4 +142,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'mail.moyo.kiev.ua'
+EMAIL_PORT = 25
+EMAIL_HOST_USER = 'alertmail_1C@moyo.kiev.ua'
+EMAIL_HOST_PASSWORD = 'ymqsPAy0oTsyrkIzDX8z'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+DEFAULT_TO_EMAIL = EMAIL_HOST_USER

@@ -1,10 +1,75 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'layouts/base.html' %}
 
-</body>
-</html>
+{% block content %}
+    {% load static %}
+    <!-- slider_area_start -->
+    <div class="slider_area">
+        <div class="slider_active owl-carousel">
+            <div class="single_slider  d-flex align-items-center slider_bg_1 overlay">
+                <div class="container">
+                    <div class="row align-items-center justify-content-center">
+                        <div class="col-xl-9 col-md-9 col-md-12">
+                            <div class="slider_text text-center">
+                                <div class="deal_text">
+                                    <span>Big Deal</span>
+                                </div>
+                                <h3>Burger <br>
+                                    Bachelor</h3>
+                                <h4>Maxican</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="single_slider  d-flex align-items-center slider_bg_2 overlay">
+                <div class="container">
+                    <div class="row align-items-center justify-content-center">
+                        <div class="col-xl-9 col-md-9 col-md-12">
+                            <div class="slider_text text-center">
+                                <div class="deal_text">
+                                    <span>Big Deal</span>
+                                </div>
+                                <h3>Burger <br>
+                                    Bachelor</h3>
+                                <h4>Maxican</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- slider_area_end -->
+
+    <div class="section">
+			<div class="container">
+				<div class="column">
+                    <br>
+
+                    <h3 class="footer_title">Сторінка відгуків</h3>
+					<hr>
+					<h3 class="footer_title">
+                        <div class="row">
+					    <table id="orders_table" border="1">
+						<thead>
+							<tr>
+								<th>User</th>
+								<th>Comment</th>
+							</tr>
+						</thead>
+						<tbody id="gallery">
+							{% for com in all_comments %}
+								<tr>
+									<td>{{ com.user }}</td>
+									<td>{{ com.comment }}</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+                        </table><br>
+				</div>
+					</h3>
+                    <br>
+				</div>
+			</div>
+    </div>
+{% endblock content %}

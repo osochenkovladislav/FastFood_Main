@@ -35,9 +35,11 @@ def product_api(request, pr_id=0):
     if request.method == 'POST':
         product_data = JSONParser().parse(request)
         product_serializer = ProductSerializer(data=product_data)
+        print(product_serializer)
         if product_serializer.is_valid():
             product_serializer.save()
             return JsonResponse('Product has been Added successfully!', safe=False)
+        print(product_serializer.errors)
         return JsonResponse('Failed to Add the Product!', safe=False)
 
     elif request.method == 'PUT':

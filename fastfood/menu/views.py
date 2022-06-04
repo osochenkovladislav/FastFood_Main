@@ -21,7 +21,6 @@ def create(request):
     data = dict()
     data['title'] = 'Додавання товару'
     if request.method == 'GET':
-        # Блокування неавторизованного доступу
         if request.user.username == 'admin123':
             data['form'] = ProductForm()
             return render(request, 'menu/create.html', data)
@@ -50,11 +49,9 @@ def update(request, product_id: int):
         filled_form = ProductFormUpdate(request.POST, request.FILES)
         print(filled_form.errors.as_data())
         if filled_form.is_valid():
-            print('зашел зашел зашел')
             product.name = filled_form.cleaned_data['name']
             product.about = filled_form.cleaned_data['about']
             product.category = filled_form.cleaned_data['category']
-            #product.picture = filled_form.cleaned_data['picture']
             product.price = filled_form.cleaned_data['price']
             product.save()
         return redirect('/menu')
@@ -78,17 +75,13 @@ def delete(request, product_id: int):
 
 def ajax_cart(request):
     response = dict()
-
     uid = request.GET.get('uid')
     pid = request.GET.get('pid')
     price = request.GET.get('price')
-
     response['uid'] = f'UID: {uid}'
     response['pid'] = f'PID: {pid}'
     response['price'] = f'PRICE: {price}'
-
     product = Product.objects.get(id=pid)
-
     Order.objects.create(
         title=f'Order-{pid}/{uid}',
         amount=float(product.price),
@@ -96,29 +89,22 @@ def ajax_cart(request):
         product_id=pid,
         user_id=uid
     )
-
     user_orders = Order.objects.filter(user_id=uid)
-
     amount = 0
     for order in user_orders:
         amount += order.amount
-
     response['amount'] = amount
     response['count'] = len(user_orders)
-
     return JsonResponse(response)
 
 
 def ajax_cart_display(request):
     response = dict()
     uid = request.GET['uid']
-
     user_orders = Order.objects.filter(user_id=uid)
-
     s = 0
     for order in user_orders:
         s += order.amount
-
     response['amount'] = s
     response['count'] = len(user_orders)
     return JsonResponse(response)
